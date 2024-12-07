@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import os
+import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -15,6 +17,21 @@ MAINTENANCE_MODE = False  # قم بتعيينها إلى False عندما تنت
 # تفعيل أو تعطيل تسجيل الدخول
 REQUIRE_LOGIN = os.environ.get('REQUIRE_LOGIN', 'False') == 'True'
 
+# إعداد قاعدة البيانات
+DATABASE = 'visitors.db'
+
+def init_db():
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS visitors (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
 @app.before_request
 def check_access():
     if MAINTENANCE_MODE and request.endpoint != 'maintenance':
@@ -27,6 +44,25 @@ def check_access():
         # التحقق من تسجيل الدخول
         if not session.get('logged_in'):
             return redirect(url_for('login'))
+    
+    # عد الزوار فقط للطلبات GET إلى الصفحات الرئيسية
+    if request.method == 'GET' and request.endpoint not in ['maintenance', 'static']:
+        log_visitor()
+
+def log_visitor():
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO visitors (timestamp) VALUES (?)', (datetime.now(),))
+    conn.commit()
+    conn.close()
+
+def get_visitor_count():
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute('SELECT COUNT(*) FROM visitors')
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
 
 @app.route('/maintenance')
 def maintenance():
@@ -52,6 +88,7 @@ def login():
 def index():
     # تسجيل الدخول يتم التحقق منه في before_request
     name = "Fares Ayoub"
+    visitor_count = get_visitor_count()
 
     duplicates = []
     unique = []
@@ -82,10 +119,12 @@ def index():
         text = ''
 
         return render_template('index.html', duplicates=duplicates, unique=unique, text=text,
-                               duplicate_count=duplicate_count, unique_count=unique_count, name=name)
+                               duplicate_count=duplicate_count, unique_count=unique_count, name=name,
+                               visitor_count=visitor_count)
     else:
         # عند إعادة تحميل الصفحة، نجعل النتائج فارغة
-        return render_template('index.html', duplicates=[], unique=[], text='', duplicate_count=0, unique_count=0, name=name)
+        return render_template('index.html', duplicates=[], unique=[], text='', duplicate_count=0,
+                               unique_count=0, name=name, visitor_count=visitor_count)
 
 @app.route('/email_password_tool', methods=['GET', 'POST'])
 def email_password_tool():
@@ -95,6 +134,7 @@ def email_password_tool():
     password = ''
     result = ''
     email_count = 0
+    visitor_count = get_visitor_count()
 
     if request.method == 'POST':
         emails_text = request.form.get('emails', '')
@@ -119,10 +159,11 @@ def email_password_tool():
             return redirect(url_for('email_password_tool'))
 
         return render_template('email_password_tool.html', name=name, result=result,
-                               emails_text=emails_text, password=password, email_count=email_count)
+                               emails_text=emails_text, password=password, email_count=email_count,
+                               visitor_count=visitor_count)
     else:
         return render_template('email_password_tool.html', name=name, result='',
-                               emails_text='', password='', email_count=0)
+                               emails_text='', password='', email_count=0, visitor_count=visitor_count)
 
 @app.route('/logout')
 def logout():
@@ -130,4 +171,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
+    init_db()
     app.run()
