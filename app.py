@@ -13,7 +13,7 @@ APP_PASSWORD = os.environ.get('APP_PASSWORD', 'Fares1999')
 MAINTENANCE_MODE = False  # قم بتعيينها إلى False عندما تنتهي من الصيانة
 
 # تفعيل أو تعطيل تسجيل الدخول
-REQUIRE_LOGIN = os.environ.get('REQUIRE_LOGIN', 'True') == 'True'
+REQUIRE_LOGIN = os.environ.get('REQUIRE_LOGIN', 'False') == 'True'
 
 @app.before_request
 def check_access():
