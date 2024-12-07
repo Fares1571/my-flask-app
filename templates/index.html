@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>مستخرج النصوص المكررة والفريدة</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <!-- مربع الاسم الملون -->
+        <div class="name-box">
+            <h1>{{ name }}</h1>
+        </div>
+        <header>
+            <h2>مرحبًا بك يا صديقي العزيز!</h2>
+            <p>أنا هنا لمساعدتك. واتس: 01211584356.</p>
+            <p>صلِّ على النبي محمد ﷺ</p>
+            <p>آية قرآنية: "وَقُل رَّبِّ زِدْنِي عِلْمًا" (طه: 114)</p>
+        </header>
+        <!-- قسم التنقل بالمربعات الملونة -->
+        <nav class="navigation">
+            <a href="{{ url_for('index') }}" class="nav-box">صفحة التكرار</a>
+            <a href="{{ url_for('email_password_tool') }}" class="nav-box">أداة البريد الإلكتروني وكلمة المرور</a>
+        </nav>
+        <main>
+            <form method="POST" action="{{ url_for('index') }}">
+                <label for="input_text">أدخل النص هنا:</label>
+                <textarea id="input_text" name="text" rows="10" placeholder="أدخل النصوص هنا" autocomplete="off"></textarea>
+                <button type="submit">استخراج</button>
+            </form>
+            {% if duplicates or unique %}
+                <div class="results">
+                    {% if duplicates %}
+                        <div class="result-section" id="duplicates">
+                            <h2>السطور المكررة ({{ duplicate_count }}):</h2>
+                            <textarea readonly>{{ duplicates | join('\n') }}</textarea>
+                            <button id="copy-duplicates" onclick="copyToClipboard('duplicates')">نسخ السطور المكررة</button>
+                        </div>
+                    {% endif %}
+                    {% if unique %}
+                        <div class="result-section" id="unique">
+                            <h2>السطور الفريدة ({{ unique_count }}):</h2>
+                            <textarea readonly>{{ unique | join('\n') }}</textarea>
+                            <button id="copy-unique" onclick="copyToClipboard('unique')">نسخ السطور الفريدة</button>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </main>
+        <footer>
+            <a href="{{ url_for('logout') }}" class="logout-button">تسجيل الخروج</a>
+            <p class="footer-message">تم إنشاء هذا الموقع بواسطة {{ name }}. إذا استفدت، أتمنى أن تدعو لي بدعوة صادقة من قلبك.</p>
+        </footer>
+    </div>
+    <script>
+        function copyToClipboard(id) {
+            var copyText = document.querySelector(`#${id} textarea`);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            document.execCommand("copy");
+            
+            var button = document.getElementById(`copy-${id}`);
+            var originalText = button.innerHTML;
+            button.innerHTML = "تم النسخ!";
+            button.disabled = true;
+            
+            // إضافة تأثير بصري
+            button.classList.add('copy-feedback');
+            
+            setTimeout(function() {
+                button.innerHTML = originalText;
+                button.disabled = false;
+                button.classList.remove('copy-feedback');
+            }, 2000); // 2 ثوانٍ
+        }
+
+        // مسح الحقول عند تحديث الصفحة
+        window.onload = function() {
+            document.getElementById('input_text').value = '';
+        };
+    </script>
+</body>
+</html>

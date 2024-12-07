@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <!-- مربع الاسم الملون -->
+        <div class="name-box">
+            <h1>{{ name }}</h1>
+        </div>
+        <main>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('login') }}">
+                <label for="password">أدخل كلمة المرور للدخول:</label>
+                <input type="password" id="password" name="password" placeholder="كلمة المرور" required autocomplete="off">
+                <button type="submit">دخول</button>
+            </form>
+        </main>
+        <footer>
+            <p class="footer-message">تم إنشاء هذا الموقع بواسطة {{ name }}. إذا استفدت، أتمنى أن تدعو لي بدعوة صادقة من قلبك.</p>
+        </footer>
+    </div>
+</body>
+</html>

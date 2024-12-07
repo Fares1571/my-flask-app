@@ -1,0 +1,278 @@
+/* إعدادات عامة */
+body {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* حاوية المحتوى */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+}
+
+/* مربع الاسم الملون */
+.name-box {
+    background-color: #4caf50; /* اللون الأخضر لمربع الاسم */
+    color: #fff;
+    text-align: center;
+    padding: 20px 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.name-box h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+/* العناوين */
+header, footer {
+    background-color: transparent;
+    color: #333;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* النصوص */
+p {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #333;
+}
+
+/* النماذج */
+form {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+}
+
+/* مربع كلمة المرور */
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 35px; /* تقليل الارتفاع */
+    resize: none;
+}
+
+/* مربعات الإدخال والنصوص */
+textarea {
+    width: 100%;
+    font-size: 14px; /* تصغير حجم النص داخل المربعات */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 100px; /* تحديد ارتفاع المربع */
+    resize: vertical; /* يسمح بالتمرير العمودي */
+    overflow-y: auto; /* إضافة شريط تمرير عمودي */
+    white-space: nowrap; /* منع النص من الانتقال إلى السطر التالي */
+    word-wrap: break-word; /* الكلمات الطويلة تنكسر داخل المربع */
+}
+
+/* مربعات النتايج */
+.result-section textarea {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 150px;
+    resize: vertical;
+    overflow-y: auto;
+    white-space: pre-wrap; /* يسمح بالنقل التلقائي للنص إلى السطر التالي */
+    word-wrap: break-word; /* الكلمات الطويلة تنكسر داخل المربع */
+}
+
+/* مربعات النتايج بعد التعديل */
+.result-section h2 {
+    font-size: 16px;
+}
+
+/* تحسين التفاعل مع زر "استخراج" */
+.result-section button.extract {
+    background-color: #2196f3; /* اللون الأزرق للزر "استخراج" */
+    margin-top: 10px;
+    padding: 8px 16px; /* تقليل العرض */
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: auto; /* جعل العرض تلقائي بما يتناسب مع النص */
+    height: auto; /* الحفاظ على الارتفاع */
+}
+
+.result-section button.extract:hover {
+    background-color: #1976d2; /* لون أزرق أغمق عند التمرير */
+}
+
+/* تحسين التفاعل مع زر نسخ النصوص */
+.result-section button.copy {
+    background-color: #4caf50; /* اللون الأخضر لأزرار النسخ */
+    margin-top: 10px;
+    padding: 10px 20px; /* الحفاظ على الحجم المناسب */
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.result-section button.copy:hover {
+    background-color: #45a049; /* لون أخضر أغمق عند التمرير */
+}
+
+/* زر الدخول */
+button {
+    background-color: #4caf50; /* اللون الأخضر للأزرار */
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* يجعل الزر يمتد بالكامل عرضًا */
+}
+
+/* زر الدخول عند التمرير */
+button:hover {
+    background-color: #45a049; /* تغيير اللون عند التمرير */
+}
+
+/* رسائل الفلاش والتنبيهات */
+.alert, .flash {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* رسالة التذييل */
+.footer-message {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+}
+
+/* تصميم متجاوب */
+@media (max-width: 768px) {
+    .name-box h1 {
+        font-size: 28px;
+    }
+    header h2, footer h2 {
+        font-size: 18px;
+    }
+    label, textarea, input[type="password"], button {
+        font-size: 16px;
+    }
+    .result-section h2 {
+        font-size: 16px;
+    }
+    button {
+        padding: 10px 20px;
+    }
+}
+
+/* تنسيق الأزرار في النموذج */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.buttons button {
+    width: 100%;
+    background-color: #4caf50;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: #45a049;
+}
+
+/* تخصيص ألوان مختلفة لكل زر */
+.buttons button[name="action"][value="add_password"] {
+    background-color: #4caf50; /* أخضر */
+}
+
+.buttons button[name="action"][value="remove_password"] {
+    background-color: #f44336; /* أحمر */
+}
+
+.buttons button[name="action"][value="remove_password"]:hover {
+    background-color: #d32f2f; /* أحمر غامق */
+}
+
+/* تنسيق قسم التنقل */
+.navigation {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.nav-box {
+    background-color: #4caf50; /* اللون الافتراضي */
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* جعل المربعات أصغر */
+.nav-box {
+    width: auto;
+    display: inline-block;
+}
+
+/* تخصيص ألوان مختلفة لكل مربع */
+.nav-box:nth-child(1) {
+    background-color: #4caf50; /* اللون الأخضر */
+}
+
+.nav-box:nth-child(1):hover {
+    background-color: #45a049; /* لون أخضر أغمق */
+}
+
+.nav-box:nth-child(2) {
+    background-color: #f44336; /* اللون الأحمر */
+}
+
+.nav-box:nth-child(2):hover {
+    background-color: #d32f2f; /* لون أحمر أغمق */
+}
+
+.nav-box:hover {
+    transform: translateY(-3px); /* تحريك للأعلى عند التمرير */
+}
+
+/* تأثير بصري لزر النسخ */
+.copy-feedback {
+    opacity: 0.6;
+}
