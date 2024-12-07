@@ -11,10 +11,5 @@
       "src": "/(.*)",
       "dest": "app.py"
     }
-  ],
-  "env": {
-    "SECRET_KEY": "your_secret_key",
-    "APP_PASSWORD": "Fares1999",
-    "REQUIRE_LOGIN": "True"  // أو "False" لتعطيل تسجيل الدخول
-  }
+  ]
 }
