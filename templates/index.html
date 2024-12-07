@@ -5,7 +5,6 @@
     <title>مستخرج النصوص المكررة والفريدة</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- لإضافة أيقونات النسخ -->
 </head>
 <body>
     <div class="container">
@@ -25,8 +24,6 @@
             <a href="{{ url_for('email_password_tool') }}" class="nav-box">أداة البريد الإلكتروني وكلمة المرور</a>
         </nav>
         <main>
-            <p>عدد الزوار: {{ visitor_count }}</p> <!-- عرض عدد الزوار -->
-
             <form method="POST" action="{{ url_for('index') }}">
                 <label for="input_text">أدخل النص هنا:</label>
                 <textarea id="input_text" name="text" rows="10" placeholder="أدخل النصوص هنا" autocomplete="off"></textarea>
@@ -38,18 +35,14 @@
                         <div class="result-section" id="duplicates">
                             <h2>السطور المكررة ({{ duplicate_count }}):</h2>
                             <textarea readonly>{{ duplicates | join('\n') }}</textarea>
-                            <button id="copy-duplicates" onclick="copyToClipboard('duplicates')" class="copy">
-                                <i class="fas fa-copy"></i> نسخ السطور المكررة
-                            </button>
+                            <button id="copy-duplicates" onclick="copyToClipboard('duplicates')">نسخ السطور المكررة</button>
                         </div>
                     {% endif %}
                     {% if unique %}
                         <div class="result-section" id="unique">
                             <h2>السطور الفريدة ({{ unique_count }}):</h2>
                             <textarea readonly>{{ unique | join('\n') }}</textarea>
-                            <button id="copy-unique" onclick="copyToClipboard('unique')" class="copy">
-                                <i class="fas fa-copy"></i> نسخ السطور الفريدة
-                            </button>
+                            <button id="copy-unique" onclick="copyToClipboard('unique')">نسخ السطور الفريدة</button>
                         </div>
                     {% endif %}
                 </div>
@@ -69,7 +62,7 @@
             
             var button = document.getElementById(`copy-${id}`);
             var originalText = button.innerHTML;
-            button.innerHTML = "<i class='fas fa-check'></i> تم النسخ!";
+            button.innerHTML = "تم النسخ!";
             button.disabled = true;
             
             // إضافة تأثير بصري
