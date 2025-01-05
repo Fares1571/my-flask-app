@@ -63,18 +63,20 @@ def index():
         # تقسيم النص إلى سطور وتجاهل السطور الفارغة
         lines = [line.strip() for line in text.split('\n') if line.strip()]
 
-        seen = set()
-        duplicate_set = set()
+        seen = {}
+        unique = []
+        duplicates = []
 
         for line in lines:
             if line in seen:
-                if line not in duplicate_set:
-                    duplicates.append(line)
-                    duplicate_set.add(line)
+                seen[line] += 1
+                duplicates.append(line)
             else:
+                seen[line] = 1
                 unique.append(line)
-                seen.add(line)
 
+        # إزالة النسخة الأولى من duplicates لأنها موجودة في unique
+        # لكن في هذه الحالة، duplicates تحتوي فقط على النسخ المتكررة (استثناء النسخة الأولى)
         duplicate_count = len(duplicates)
         unique_count = len(unique)
 
